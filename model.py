@@ -4,6 +4,8 @@ import matplotlib.pyplot as plt
 import matplotlib.image as mpimg
 import cv2
 import os
+import tensorflow as tf
+
 
 key_points_df= pd.read_csv('data/training_frames_keypoints.csv')
 
@@ -34,13 +36,22 @@ class make_dataset:
 
         return sample
     
-x_train = make_dataset(csv_dir='data/training_frames_keypoints.csv', 
+x_train = np.asaaymake_dataset(csv_dir='data/training_frames_keypoints.csv', 
                            root_dir= 'data/training/')
+x_test = make_dataset(csv_dir='data/test_frames_keypoints.csv', root_dir="data/test")
 print("Number of images are", len(x_train))
 
-sample = x_train[5]
-kp= sample['key_points']
-print(sample['image'].shape, sample['key_points'].shape)
-plt.imshow(sample['image'])
-plt.scatter(kp[:, 0], kp[:, 1], s=20, marker='.', c='m')
-    
+model = tf.keras.models.Sequential()
+
+model.add(tf.keras.layers.Conv2D(filters =32, kernel_size =3,activation = 'relu', input_shape=[192, 192, 3] ))
+model.add(tf.keras.layers.MaxPool2D(pool_size =2))
+model.add(tf.keras.layers.Dropout(0.2))
+model.add(tf.keras.layers.Conv2D(filters =32, kernel_size= 3, activation ='relu'))
+model.add(tf.keras.layers.MaxPool2D(pool_size=2))
+model.add(tf.keras.layers.Flatten())
+model.add(tf.keras.layers.Dense(units=128, activation='relu'))
+model.add(tf.keras.layers.Dense(units=1, activation='sigmoid'))
+model.compile(optimizer = 'adam', loss = 'binary_crossentropy', metrics = ['accuracy'])
+
+model.fit(x = x_train, validation_data = x_test, epochs = 25)   
+   
