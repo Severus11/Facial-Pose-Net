@@ -124,17 +124,17 @@ score = model.evaluate(X_test, y_test, verbose=0)
 print('Test loss:', score[0])
 print('Test accuracy:', score[1])
 
-from tf.keras.preprocessing import image
-test_image = image.load_img('single_prediction/cat_or_dog_1.jpg', target_size = (64, 64))
-test_image = image.img_to_array(test_image)
-test_image = np.expand_dims(test_image, axis = 0)
-result = cnn.predict(test_image)
-training_set.class_indices
-if result[0][0] == 1:
-    prediction = 'dog'
-else:
-    prediction = 'cat'
-print(prediction)
-
 model.save_weights('model_weights12.h5')
 print('model weights saved to disk')
+
+from tf.keras.preprocessing import image
+test_image = image.load_img("data/test/Adam_Sandler_41.jpg", target_size = (64, 64))
+test_image = image.img_to_array(test_image)
+test_image = np.expand_dims(test_image, axis = 0)
+
+
+result = model.predict(test_image)
+result= result.astype('float').reshape(-1,2)
+plt.imshow(test_image)
+plt.scatter(result[:, 0], result[:, 1], s=20, marker='.', c='m')
+

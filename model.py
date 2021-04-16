@@ -14,7 +14,7 @@ class Facial_Pose_Net_model(object):
         self.loaded_model.load_weights(model_weights_file)
         self.loaded_model.make_predict_function()
     
-    def predict_emotion(self, img):
-        self.preds= self.loaded_model.predict(img)
-        return FacialExpressionModel.EMOTION_LIST[np.argmax(self.preds)]
+    def predict_points(self, img):
+        result= self.loaded_model.predict(img)
+        return result
 
