@@ -16,10 +16,11 @@ for (x, y, w, h) in faces:
     pred = model.predict_points(roi[np.newaxis, :, :])
     pred= pred.astype('uint8').reshape(-1,2)
     print('list of points: ', pred)
-    for i in range(0,len(pred)):
+    for i in range(15,68):
         cv2.circle(roi,(pred[i,0], pred[i,1]), 2, (255,0,0), 5)
     
     cv2.rectangle(fr,(x,y),(x+w,y+h),(255,0,0),2)
+    
 
-plt.imshow(fr)
+
     

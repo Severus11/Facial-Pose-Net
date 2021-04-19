@@ -15,13 +15,13 @@ while True:
         fc = fr[y:y+h, x:x+w]
         roi = cv2.resize(fc, (96,96))
         pred = model.predict_points(roi[np.newaxis, :, :])
-        
-        for i in range(0,len(pred)):
+        pred= pred.astype('uint8').reshape(-1,2)
+        for i in range(15,60):
             cv2.circle(roi,(pred[i,0], pred[i,1]), 2, (255,0,0), 7)
     
         cv2.rectangle(fr,(x,y),(x+w,y+h),(255,0,0),2)
 
-    cv2.imshow('FKPD',fr)
+        cv2.imshow('FKPD',roi)
     
     if cv2.waitKey(50) & 0xFF==27:
         break
