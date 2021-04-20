@@ -20,7 +20,7 @@ for (x, y, w, h) in faces:
         cv2.circle(roi,(pred[i,0], pred[i,1]), 2, (255,0,0), 5)
     
     cv2.rectangle(fr,(x,y),(x+w,y+h),(255,0,0),2)
-    
+plt.imshow(roi)   
 
 
     
