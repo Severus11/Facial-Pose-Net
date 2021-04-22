@@ -21,10 +21,10 @@ for (x, y, w, h) in faces:
     xs = int(pred[17, 0])
     ys = int(pred[17, 1])
     
-    hs = int(abs(pred[27,1] - pred[34,1]))
-    ws = int(abs(pred[17,0] - pred[26,0]))
+    hs = abs(int(pred[27,1]) - int(pred[34,1]))
+    ws = abs(int(pred[17,0]) - int(pred[26,0]))
     
-    new_sunglasses= cv2.resize(sunglass, (ws,hs), interpolation = cv2.INTER_CUBIC)
+    new_sunglasses= cv2.resize(sunglass, (ws,hs))
     ind = np.argwhere(new_sunglasses[:,:,3] > 0)
     
     for i in range(3):
@@ -33,8 +33,4 @@ for (x, y, w, h) in faces:
     plt.imshow(roi)
 
 
-cv2.destroyAllWindows()  
-   
-
-
-    
+cv2.destroyAllWindows()    
